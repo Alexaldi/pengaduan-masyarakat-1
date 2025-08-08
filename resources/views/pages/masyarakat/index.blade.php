@@ -5,13 +5,12 @@ Dashboard
 @endsection
 @section('content')
 <main class="h-full pb-16 overflow-y-auto">
-  {{-- @foreach($liat as $li)
+  {{-- @foreach($user as $li)
  <li>{{ $li->nik }}</li>
   @endforeach --}}
   <div class="container px-6 mx-auto grid">
     <h2 class="my-6 text-2xl font-semibold text-center text-gray-700 dark:text-gray-200">
     </h2>
-
 
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -40,7 +39,7 @@ Dashboard
           <span class="text-gray-700 dark:text-gray-400">Foto</span>
           <input
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            type="file" value="{{ old('image')}}" name="image" />
+            type="file" value="{{ old('image')}}" name="image" required/>
         </label>
         <button
         style="width: 100%"

@@ -13,16 +13,16 @@
     <nav>
     </nav>
     <div class="flex justify-center flex-1">
-      <a class="inline-flex items-center text-sm mr-5 font-semibold transition-colors duration-150 "
-        href="{{ url('user')}}">
-
-        <span class="ml-4">Dashboard</span>
+      <a class="inline-flex items-center text-xl mr-5 font-semibold transition-colors duration-150 " href="{{ url('chat') }}">
+        <span class="ml-4">Admin Service</span>
       </a>
 
-      <a class="inline-flex items-center text-sm mr-5 font-semibold transition-colors duration-150 "
-        href="{{ url('user/pengaduan')}} ">
+      <a class="inline-flex items-center text-xl mr-5 font-semibold transition-colors duration-150 " href="{{ url('user')}}">
+        <span class="ml-4">Laporkan</span>
+      </a>
 
-        <span class="ml-4">Pengaduan</span>
+      <a class="inline-flex items-center text-xl mr-5 font-semibold transition-colors duration-150" href="{{ url('user/pengaduan')}} ">
+        <span class="ml-4">Dashboard Laporan Anda</span>
       </a>
       {{-- <div @click.away="open = false" class="relative" x-data="{ open: false }">
         <button @click="open = !open"
@@ -49,10 +49,6 @@
           </div>
         </div>
       </div> --}}
-
-
-
-
     </div>
 
     <ul class="flex items-center flex-shrink-2 space-x-6">
@@ -81,8 +77,7 @@
       <li class="relative">
         <button class="align-middle rounded-full focus:shadow-outline-red focus:outline-none"
           @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account" aria-haspopup="true">
-          <img class="object-cover w-8 h-8 rounded-full" src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png"
-            alt="" aria-hidden="true" />
+          <img class="object-cover w-8 h-8 rounded-full" src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png" alt="" aria-hidden="true" />
         </button>
         <template x-if="isProfileMenuOpen">
           <ul x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"

@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RegisteredUserController extends Controller
 {
@@ -33,12 +34,22 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nik' => 'required|string|max:16|unique:users',
+            'nik' => 'required|numeric|digits:16|unique:users,nik',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string|max:15',
+            'phone' => 'required|string|digits_between:11,12|unique:users,phone',
             'password' => 'required|string|confirmed|min:8',
             
+        ], [
+        'nik.required' => 'NIK must consist of 16 digits',
+        'name.required' => 'Nama tidak boleh kosong.',
+        'email.required' => 'Email tidak boleh kosong.',
+        'email.email' => 'Format email tidak valid.',
+        'email.unique' => 'Email sudah ada.',
+        'phone.required' => 'Phone numbers must consist of 11 to 12 digits',
+        'password.required' => 'Password tidak boleh kosong.',
+        'password.confirmed' => 'Konfirmasi password tidak cocok.',
+        'password.min' => 'Password minimal 8 karakter.',
         ]);
 
         Auth::login($user = User::create([
@@ -52,6 +63,7 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        Alert::success('Berhasil', 'Register Berhasil!');
         return redirect(RouteServiceProvider::HOME);
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Models\Pengaduan;
+use App\Models\Petugas;
 use App\Models\Tanggapan;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -21,21 +23,110 @@ class MasyarakatController extends Controller
      */
     public function index()
     {
-        $user = Auth::user()->nik;
-        // dd($user);
-
-        return view('pages.masyarakat.index', ['liat'=>$user]);
+        if (Auth::user()->roles == 'USER') {
+            $user = Auth::user();
+            return view('pages.masyarakat.index', ['liat'=>$user]);
+        } else {
+            $user = Auth::user()->nik;
+            $masyarakats = User::where('roles', 'USER')->get();
+            return view('pages.admin.masyarakat', compact('masyarakats'));
+        }
     }
+
+
+    public function cariMasyarakat(Request $request)
+    {
+        $cari = $request->input('cari');
+
+        $masyarakats = User::where('roles', 'USER')
+            ->where(function ($query) use ($cari) {
+                $query->where('name', 'like', "%$cari%")
+                    ->orWhere('email', 'like', "%$cari%")
+                    ->orWhere('nik', 'like', "%$cari%");
+            })
+            ->get();
+
+        return view('pages.admin.masyarakat', compact('masyarakats'))
+            ->with('cari', $cari);
+    }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+
+    public function createMasyarakat()
     {
-        return view('pages.masyarakat.index');
+        return view('pages.admin.masyarakat.create');
     }
+
+    public function storeMasyarakat(Request $request)
+    {
+        $request->validate([
+            'nik' => 'required|numeric|unique:users,nik',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|min:11|max:12',
+            'password' => 'required|string|min:6|confirmed',
+        ], [
+        'nik.required' => 'NIK tidak boleh kosong.',
+        'name.required' => 'Nama tidak boleh kosong.',
+        'email.required' => 'Email tidak boleh kosong.',
+        'email.email' => 'Format email tidak valid.',
+        'email.unique' => 'Email sudah ada.',
+        'phone.required' => 'Nomor HP tidak boleh kosong.',
+        'password.required' => 'Password tidak boleh kosong.',
+        'password.confirmed' => 'Konfirmasi password tidak cocok.',
+        'password.min' => 'Password minimal 8 karakter.',
+        ]);
+
+        $data = $request->all();
+        $data['password'] = bcrypt($data['password']);
+        $data['roles'] = 'USER';
+
+        User::create($data);
+
+        Alert::success('Berhasil', 'Masyarakat berhasil ditambahkan');
+        return redirect()->route('admin.masyarakat');
+    }
+
+
+    public function editMasyarakat($id)
+    {
+        $masyarakat = User::findOrFail($id);
+        return view('pages.admin.masyarakat.edit', compact('masyarakat'));
+    }
+
+    public function updateMasyarakat(Request $request, $id)
+    {
+        $masyarakat = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,'.$masyarakat->id,
+        ]);
+
+        $masyarakat->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            // tambahkan update password jika diperlukan
+        ]);
+
+        Alert::success('Berhasil', 'Data masyarakat berhasil diubah');
+        return redirect()->route('admin.masyarakat');
+    }
+
+    public function destroyMasyarakat($id)
+    {
+        $masyarakat = User::findOrFail($id);
+        $masyarakat->delete();
+
+        Alert::success('Berhasil', 'Data masyarakat berhasil dihapus');
+        return redirect()->route('admin.masyarakat');
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -59,8 +150,6 @@ class MasyarakatController extends Controller
         $data['user_id']=$id;
         $data['name']=$name;
         $data['image'] = $request->file('image')->store('assets/laporan', 'public');
-
-
 
         Alert::success('Berhasil', 'Pengaduan terkirim');
         Pengaduan::create($data);

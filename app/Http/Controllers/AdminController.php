@@ -18,7 +18,6 @@ class AdminController extends Controller
     }
 
     public function index($id) {
-
         $item = Pengaduan::with([
             'details', 'user'
         ])->findOrFail($id);
@@ -36,6 +35,7 @@ class AdminController extends Controller
             'data' => $data
         ]);
     }
+
 
     public function laporan() {
 

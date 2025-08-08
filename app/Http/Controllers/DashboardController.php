@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Pengaduan;
 use App\Models\Tanggapan;
 use App\Models\User;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DashboardController extends Controller
 {
     public function index() {
+        Alert::success('Berhasil', 'Login Berhasil!');
         return view('pages.admin.dashboard',[
             'pengaduan' => Pengaduan::count(),
             'user' => User::where('roles','=', 'USER')->count(),

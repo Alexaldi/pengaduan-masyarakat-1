@@ -19,6 +19,8 @@
       @yield('content')
 
       @include('includes.masyarakat.footer')
+
+      @yield('chat')
     </div>
   </div>
   @include('sweetalert::alert')

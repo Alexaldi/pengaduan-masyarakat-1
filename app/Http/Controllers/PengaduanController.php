@@ -21,8 +21,6 @@ class PengaduanController extends Controller
         return view('pages.admin.pengaduan.index',[
             'items' => $items
         ]);
-
-
     }
 
     /**

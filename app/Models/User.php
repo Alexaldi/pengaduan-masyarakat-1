@@ -48,4 +48,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pengaduan::class, 'user_nik', 'nik');
     }
+
+    public function sentMessages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->morphMany(Message::class, 'receiver');
+    }
 }

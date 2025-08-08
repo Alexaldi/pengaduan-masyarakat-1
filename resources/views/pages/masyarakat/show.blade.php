@@ -44,14 +44,13 @@ Dashboard
 
         <div class="px-4 py-3 mb-8 flex text-gray-800 bg-white rounded-lg shadow-md dark:bg-gray-800">
           <div class="relative hidden mr-3  md:block ">
-            <h1 class="text-center mb-8 font-semibold">Foto</h1>
-            <img class=" h-32 w-35 " src="{{ Storage::url($item->image) }}" alt="" loading="lazy" />
-          </div>
-          <div class="text-center flex-1 dark:text-gray-400">
-            <h1 class="mb-8 font-semibold">Keterangan</h1>
-            <p class="text-gray-800 dark:text-gray-400">
-              {{ $item->description}}
+            <h1 class="text-center mb-4 font-semibold text-white">Keterangan</h1>
+            <p class="text-center text-gray-800 dark:text-gray-400 mb-6">
+               {{ $item->description }}
             </p>
+
+            <h1 class="text-center mb-4 font-semibold text-white">Foto</h1>
+            <img class="h-40 rounded shadow" src="{{ Storage::url($item->image) }}" alt="Foto" loading="lazy" />
           </div>
         </div>
         @endforeach

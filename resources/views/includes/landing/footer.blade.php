@@ -1,7 +1,9 @@
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="container">
-        <div class="text-center">
-            © 2022 | By <strong>Siswa Rpl SMKN 2 TRENGGALEK</strong>
-        </div>
-  </footer><!-- End Footer -->
+<!-- ======= Footer ======= -->
+<footer id="footer" class="bg-gray-800 text-white py-4 mt-8">
+  <div class="container mx-auto">
+    <div class="text-center">
+      <p class="mb-0">&copy; 2025 TIM LAYANAN PENGADUAN | PUBLIC COMPLAINTS REPORTS</p>
+    </div>
+  </div>
+</footer>
+<!-- End Footer -->

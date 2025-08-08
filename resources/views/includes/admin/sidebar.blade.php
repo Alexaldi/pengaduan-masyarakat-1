@@ -1,11 +1,9 @@
 <!-- Desktop sidebar -->
 <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
+  <h1 class="text-2xl font-bold text-center text-red-700 mt-4" style="font-family: 'Metal Mania', cursive;">
+    Petugas Pengaduan
+  </h1>
   <div class="py-4 text-gray-500 dark:text-gray-400">
-    <img src="{{ asset('img/logo.svg')}}" alt=""
-      class="inline-flex ml-3 items-center transform transition hover:scale-125 duration-300 ease-in-out" />
-    <a class="ml-3 text-lg font-bold text-gray-800 dark:text-gray-200" href="/">
-      APLIKASIKU
-    </a>
     <ul class="mt-6">
       <li class="relative px-6 py-3">
         <span
